@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2023/11/07 16:46:24 by man              ###   ########.fr       */
+/*   Updated: 2023/11/07 17:04:23 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void dead_check(t_arg *arg, t_philo **philo)
         if (arg->isdead)
             break;
         i = 0;
-        while (arg->eat_num != 0 && i < arg->philo_n && philo[i]->eat_count >= arg->eat_num)
+        while (arg->eat_num != -1 && i < arg->philo_n && philo[i]->eat_count >= arg->eat_num)
             i++;
         if (i == arg->philo_n)
             arg->eatend = 1;
@@ -90,6 +90,13 @@ void *thread_work(void *a)
     i = 0;
     philo = (t_philo *)a;
     arg = philo->arg;
+    if (arg->philo_n == 1)
+    {
+        philo_print(arg, philo->id, "has taken a fork");
+        philo_print(arg, philo->id, "died");
+        arg->isdead = 1;
+        return (NULL);
+    }
     if (philo->id % 2 == 0)
         usleep(100);
     while (!(arg->isdead))

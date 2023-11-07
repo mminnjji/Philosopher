@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:56 by man               #+#    #+#             */
-/*   Updated: 2023/11/07 16:43:18 by man              ###   ########.fr       */
+/*   Updated: 2023/11/07 17:02:14 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int arg_init(char **argv, int argc, t_arg *p)
     p->death_time = ft_atoi(argv[2]);
     p->eat_time = ft_atoi(argv[3]);
     p->sleep_time = ft_atoi(argv[4]);
-    p->eat_num = 0;
+    p->eat_num = -1;
     p->isdead = 0;
     p->eatend = 0;
     if (argc == 6)
         p->eat_num = ft_atoi(argv[5]) - 1;
-    if (p->philo_n < 1 || p->death_time < 0 || p->eat_time < 0 || p->sleep_time < 0 || (argc == 6 && p->eat_num <= 0))
+    if (p->philo_n < 1 || p->death_time < 0 || p->eat_time < 0 || p->sleep_time < 0 || (argc == 6 && p->eat_num < 0))
         return (1);
     p->fork = malloc(sizeof(pthread_mutex_t) * p->philo_n);
     if (!p->fork)

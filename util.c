@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:38:01 by man               #+#    #+#             */
-/*   Updated: 2023/11/07 16:41:44 by man              ###   ########.fr       */
+/*   Updated: 2023/11/07 16:59:14 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void philo_print(t_arg *arg, int id, char *str)
 
 int print_error(int n)
 {
-    if (n == 0)
+    if (n == 1)
         write(2, "Bad argument\n", 13);
-    else if (n == 1)
-        write(2, "Malloc error - no memory\n", 25);
     else if (n == 2)
+        write(2, "Malloc error - no memory\n", 25);
+    else if (n == 3)
         write(2, "Mutex initializing error\n", 25);
     return (0);
 }
