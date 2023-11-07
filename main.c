@@ -6,85 +6,65 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:56 by man               #+#    #+#             */
-/*   Updated: 2023/11/04 17:14:45 by man              ###   ########.fr       */
+/*   Updated: 2023/11/07 16:43:18 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void interval_usleep(long long sleep_t, t_arg *arg)
+int philo_init(t_arg *arg)
 {
-    long long n;
+    int i;
+    t_philo **philo;
 
-    n = get_time();
-    while (!(arg->isdead))
-	{
-		if (n - get_time() >= sleep_t)
-			break ;
-		usleep(50);
-	}
-}
-
-void philo_print(t_philo *philo, int type)
-{
-    pthread_mutex_lock(&(philo->arg->write_m));
-    if (type == 4)
+    i = 0;
+    philo = malloc(sizeof(t_philo *));
+    if (!philo)
+        return (0);
+    while (i < arg->philo_n)
     {
-        printf("%lli ", get_time() - philo->arg->start_time);
-		printf("%i ", philo->id + 1);
-        if (type == 0)
-		    printf(" died\n");
+        philo[i] = malloc(sizeof(t_philo));
+        if (!philo[i])
+            return (0);
+        philo[i]->id = i + 1; // 1번부터 번호매김
+        philo[i]->eat_count = 0;
+		philo[i]->left_fork = i + 1;
+		philo[i]->right_fork = (i + 2) % arg->philo_n; // n -> 1로 이어지도록 
+		philo[i]->last_eat = 0; // 마지막으로 먹은 시간
+		philo[i]->arg = arg; // arg 요소 미리 갖고 있기 - 이중참조
+        i++;
     }
-	if (!(philo->arg->isdead))
-	{
-		printf("%lli ", get_time() - philo->arg->start_time);
-		printf("%i ", philo->id + 1);
-        if (type == 0)
-		    printf(" has taken a fork\n");
-        if (type == 1)
-            printf(" is eating\n");
-        if (type == 2)
-            printf(" is sleeping\n");
-        if (type == 3)
-            printf("min_eat reached\n");
-	}
-	pthread_mutex_unlock(&(philo->arg->write_m));
+    arg->philo = philo;
+    return (1);
 }
 
-void clear_mutex(t_arg *arg)
+int arg_init(char **argv, int argc, t_arg *p)
 {
     int i;
 
-    if (arg->fork_m)
+    p->philo_n = ft_atoi(argv[1]);
+    p->death_time = ft_atoi(argv[2]);
+    p->eat_time = ft_atoi(argv[3]);
+    p->sleep_time = ft_atoi(argv[4]);
+    p->eat_num = 0;
+    p->isdead = 0;
+    p->eatend = 0;
+    if (argc == 6)
+        p->eat_num = ft_atoi(argv[5]) - 1;
+    if (p->philo_n < 1 || p->death_time < 0 || p->eat_time < 0 || p->sleep_time < 0 || (argc == 6 && p->eat_num <= 0))
+        return (1);
+    p->fork = malloc(sizeof(pthread_mutex_t) * p->philo_n);
+    if (!p->fork)
+        return (2);
+    i = 0;
+    while (i < p->philo_n)
     {
-        i = 0;
-        while (i < arg->philo_n)
-            pthread_mutex_destroy(&arg->fork_m[i++]);
-        free(arg->fork_m);
+        if (pthread_mutex_init(&(p->fork[i]), NULL) == -1) // 포크를 뮤텍스로 만들어 지정하기
+            return (3);
+        i++;
     }
-    if (arg->philo)
-    {
-        i = 0;
-        while (i < arg->philo_n)
-        {
-            pthread_mutex_destroy(&arg->philo[i].check_m);
-            pthread_mutex_destroy(&arg->philo[i++].eat_m);
-        }
-        free(arg->philo);
-    }
-    pthread_mutex_destroy(&arg->write_m);
-    pthread_mutex_destroy(&arg->dead_m);
-}
-
-int print_error(t_arg *arg, int n)
-{
-    if (n == 0)
-        write(2, "Bad argument\n", 13);
-    else if (n == 1)
-        write(2, "Malloc error - no memory\n", 25);
-    else if (n == 2)
-        write(2, "Mutex initializing error\n", 25);
-    clear_mutex(arg);
+    if (pthread_mutex_init(&(p->eat_check), NULL) == -1 ||  pthread_mutex_init(&(p->work), NULL) == -1)
+        return (3);
     return (0);
 }
 
@@ -94,16 +74,17 @@ int main(int argc, char **argv)
     int err;
 
     if (argc < 5 || argc > 6)
-        return (print_error(&arg, 0));
+        return (print_error(0));
     err = arg_init(argv, argc, &arg);
     if (err == 1)
-        return (print_error(&arg, 1));
+        return (print_error(1));
     if (err == 2)
-        return (print_error(&arg, 2));
+        return (print_error(2));
     if (err == 3)
-        return (print_error(&arg, 3));
+        return (print_error(3));
+    if (!philo_init(&arg))
+        return (print_error(1));
     if (philo_work(&arg))
-        return (print_error(&arg, 3));
-    clear_mutex(&arg);
+        return (print_error(3));
     return(0);
 }
