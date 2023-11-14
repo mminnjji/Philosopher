@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:56 by man               #+#    #+#             */
-/*   Updated: 2023/11/09 17:23:47 by man              ###   ########.fr       */
+/*   Updated: 2023/11/14 15:41:10 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	mutex_init(t_arg *p)
 	}
 	if (pthread_mutex_init(&(p->eat_check), NULL) == -1 || \
 			pthread_mutex_init(&(p->work), NULL) == -1 || \
-			pthread_mutex_init(&(p->dead_check), NULL) == -1)
+			pthread_mutex_init(&(p->dead_check), NULL) == -1 || \
+			pthread_mutex_init(&(p->num_check), NULL) == -1 || \
+			pthread_mutex_init(&(p->count_check), NULL) == -1)
 		return (1);
 	return (0);
 }

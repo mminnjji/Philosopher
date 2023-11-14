@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:53:26 by man               #+#    #+#             */
-/*   Updated: 2023/11/09 17:12:14 by man              ###   ########.fr       */
+/*   Updated: 2023/11/14 15:46:20 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_arg
 	long long		start_time;
 	pthread_mutex_t dead_check;
 	pthread_mutex_t	eat_check;
+	pthread_mutex_t	num_check;
+	pthread_mutex_t	count_check;
 	pthread_mutex_t	work;
 	pthread_mutex_t	*fork;
 	struct s_philo	*philo;
@@ -59,5 +61,9 @@ long long	get_time(void);
 void		interval_usleep(long long sleep_t, t_arg *arg);
 void		philo_print(t_arg *arg, int id, char *str);
 int			print_error(int n);
+void		*thread_work(void *a);
+void		philo_eat(t_philo *philo);
+void		end_check(t_arg *arg);
+void		dead_check(t_arg *arg, t_philo *philo);
 
 #endif
