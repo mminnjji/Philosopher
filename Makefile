@@ -2,7 +2,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME	= philo
 
-SRCS 	= main.c util.c work.c ft_atoi.c
+SRCS 	= srcs/main.c srcs/util.c srcs/work.c srcs/ft_atoi.c
 OBJS 	= $(SRCS:.c=.o)
 
 .c.o :	$(SRCS)
@@ -11,7 +11,7 @@ OBJS 	= $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) -g -fsanitize=address
+	$(CC) -pthread -g $(OBJS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)
