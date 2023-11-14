@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:56 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 15:41:10 by man              ###   ########.fr       */
+/*   Updated: 2023/11/14 16:12:54 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,8 @@ int	main(int argc, char **argv)
 	if (!arg)
 		return (print_error(2));
 	err = arg_init(argv, argc, arg);
-	if (err == 1)
-		return (print_error(1));
-	if (err == 2)
-		return (print_error(2));
-	if (err == 3)
-		return (print_error(3));
+	if (err < 4 && err > 0)
+		return (print_error(err));
 	arg->philo = malloc(sizeof(t_philo) * (arg->philo_n));
 	if (!philo_init(&arg))
 		return (print_error(1));
