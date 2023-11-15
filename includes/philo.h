@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:53:26 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 15:46:20 by man              ###   ########.fr       */
+/*   Updated: 2023/11/14 16:28:55 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_arg
 	int				eatend;
 	int				isdead;
 	long long		start_time;
-	pthread_mutex_t dead_check;
+	pthread_mutex_t	dead_check;
 	pthread_mutex_t	eat_check;
 	pthread_mutex_t	num_check;
 	pthread_mutex_t	count_check;

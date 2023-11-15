@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:40 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 15:45:07 by man              ###   ########.fr       */
+/*   Updated: 2023/11/14 16:30:01 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sleep_think(t_arg *arg, t_philo *philo)
 	philo_print(arg, philo->id, "is thinking");
 }
 
-void *philo_one(t_arg *arg, t_philo *philo)
+void	*philo_one(t_arg *arg, t_philo *philo)
 {
 	philo_print(arg, philo->id, "has taken a fork");
 	philo_print(arg, philo->id, "died");
@@ -29,7 +29,7 @@ void *philo_one(t_arg *arg, t_philo *philo)
 	return (NULL);
 }
 
-void util(t_philo *philo)
+void	util(t_philo *philo)
 {
 	pthread_mutex_unlock(&(philo->arg->dead_check));
 	philo_eat(philo);
@@ -51,7 +51,7 @@ void	*thread_work(void *a)
 		if (philo->arg->isdead)
 		{
 			pthread_mutex_unlock(&(philo->arg->dead_check));
-			break;
+			break ;
 		}
 		util(philo);
 		if (philo->arg->eatend)

@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 16:08:17 by man              ###   ########.fr       */
+/*   Updated: 2023/11/14 16:33:39 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	philo_eat(t_philo *philo)
 	t_arg	*arg;
 
 	arg = philo->arg;
-	if (philo->eat_count <= arg->eat_num)
+	if (arg->eat_num == -1 || philo->eat_count <= arg->eat_num)
 	{
 		pthread_mutex_lock(&(arg->fork[philo->left_fork]));
 		philo_print(arg, philo->id, "has taken a fork");
@@ -31,7 +31,6 @@ void	philo_eat(t_philo *philo)
 		pthread_mutex_lock(&(arg->count_check));
 		(philo->eat_count)++;
 		pthread_mutex_unlock(&(arg->count_check));
-		//printf("id : %d count : %d \n", philo->id, philo->eat_count);
 		pthread_mutex_unlock(&(arg->fork[philo->left_fork]));
 		pthread_mutex_unlock(&(arg->fork[philo->right_fork]));
 	}

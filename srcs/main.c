@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:56 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 16:12:54 by man              ###   ########.fr       */
+/*   Updated: 2023/11/14 16:29:41 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	main(int argc, char **argv)
 {
 	t_arg	*arg;
 	int		err;
-	pthread_mutex_t test;
 
 	if (argc < 5 || argc > 6)
 		return (print_error(0));
