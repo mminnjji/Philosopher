@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2023/12/13 18:39:33 by man              ###   ########.fr       */
+/*   Updated: 2023/12/13 19:40:46 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	philo_fork_pick(t_philo *philo, t_arg **arg)
 {
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_lock(&((*arg)->fork[philo->left_fork]));
 		pthread_mutex_lock(&((*arg)->fork[philo->right_fork]));
@@ -28,7 +28,7 @@ void	philo_fork_pick(t_philo *philo, t_arg **arg)
 
 void	philo_fork_no(t_philo *philo, t_arg **arg)
 {
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_unlock(&((*arg)->fork[philo->left_fork]));
 		pthread_mutex_unlock(&((*arg)->fork[philo->right_fork]));
@@ -53,8 +53,8 @@ void	philo_eat(t_philo *philo)
 		philo_print(arg, philo->id, "has taken a fork");
 		philo_print(arg, philo->id, "has taken a fork");
 		pthread_mutex_lock(&(arg->eat_check));
-		philo_print(arg, philo->id, "is eating");
 		philo->last_eat = get_time();
+		philo_print(arg, philo->id, "is eating");
 		pthread_mutex_unlock(&(arg->eat_check));
 		interval_usleep((long long)arg->eat_time, arg);
 		pthread_mutex_lock(&(arg->count_check));
