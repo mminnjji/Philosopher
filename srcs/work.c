@@ -6,22 +6,51 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 16:33:39 by man              ###   ########.fr       */
+/*   Updated: 2023/12/13 18:39:33 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	philo_fork_pick(t_philo *philo, t_arg **arg)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(&((*arg)->fork[philo->left_fork]));
+		pthread_mutex_lock(&((*arg)->fork[philo->right_fork]));
+	}
+	else
+	{
+		pthread_mutex_lock(&((*arg)->fork[philo->right_fork]));
+		pthread_mutex_lock(&((*arg)->fork[philo->left_fork]));
+	}
+}
+
+void	philo_fork_no(t_philo *philo, t_arg **arg)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(&((*arg)->fork[philo->left_fork]));
+		pthread_mutex_unlock(&((*arg)->fork[philo->right_fork]));
+	}
+	else
+	{
+		pthread_mutex_unlock(&((*arg)->fork[philo->right_fork]));
+		pthread_mutex_unlock(&((*arg)->fork[philo->left_fork]));
+	}
+}
 
 void	philo_eat(t_philo *philo)
 {
 	t_arg	*arg;
 
 	arg = philo->arg;
+	pthread_mutex_lock(&(arg->count_check));
 	if (arg->eat_num == -1 || philo->eat_count <= arg->eat_num)
 	{
-		pthread_mutex_lock(&(arg->fork[philo->left_fork]));
+		pthread_mutex_unlock(&(arg->count_check));
+		philo_fork_pick(philo, &arg);
 		philo_print(arg, philo->id, "has taken a fork");
-		pthread_mutex_lock(&(arg->fork[philo->right_fork]));
 		philo_print(arg, philo->id, "has taken a fork");
 		pthread_mutex_lock(&(arg->eat_check));
 		philo_print(arg, philo->id, "is eating");
@@ -31,8 +60,7 @@ void	philo_eat(t_philo *philo)
 		pthread_mutex_lock(&(arg->count_check));
 		(philo->eat_count)++;
 		pthread_mutex_unlock(&(arg->count_check));
-		pthread_mutex_unlock(&(arg->fork[philo->left_fork]));
-		pthread_mutex_unlock(&(arg->fork[philo->right_fork]));
+		philo_fork_no(philo, &arg);
 	}
 }
 

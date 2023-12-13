@@ -6,11 +6,21 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:38:01 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 16:30:09 by man              ###   ########.fr       */
+/*   Updated: 2023/12/13 18:33:28 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+int	mutex_check(int flag, pthread_mutex_t *mu)
+{
+	if (flag)
+	{
+		pthread_mutex_unlock(mu);
+		return (1);
+	}
+	return (0);
+}
 
 long long	get_time(void)
 {
@@ -28,11 +38,8 @@ void	interval_usleep(long long sleep_t, t_arg *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&(arg->dead_check));
-		if (arg->isdead)
-		{
-			pthread_mutex_unlock(&(arg->dead_check));
+		if (mutex_check(arg->isdead, &(arg->dead_check)))
 			break ;
-		}
 		pthread_mutex_unlock(&(arg->dead_check));
 		if (get_time() - n >= sleep_t)
 			break ;

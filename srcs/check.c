@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:49 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 16:29:15 by man              ###   ########.fr       */
+/*   Updated: 2023/12/13 18:35:42 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,24 @@ void	dead_check(t_arg *arg, t_philo *philo)
 {
 	int	i;
 
-	while (!(arg->eatend))
+	pthread_mutex_lock(&(arg->num_check));
+	while (1)
 	{
+		if (mutex_check(arg->eatend, &(arg->num_check)))
+			break ;
+		pthread_mutex_unlock(&(arg->num_check));
 		i = 0;
 		while (i < arg->philo_n)
 		{
 			pthread_mutex_lock(&(arg->dead_check));
-			if (arg->isdead)
-			{
-				pthread_mutex_unlock(&(arg->dead_check));
+			if (mutex_check(arg->isdead, &(arg->dead_check)))
 				break ;
-			}
 			if_dead(arg, philo, i);
 			i++;
 		}
 		pthread_mutex_lock(&(arg->dead_check));
-		if (arg->isdead)
-		{
-			pthread_mutex_unlock(&(arg->dead_check));
+		if (mutex_check(arg->isdead, &(arg->dead_check)))
 			break ;
-		}
 		pthread_mutex_unlock(&(arg->dead_check));
 		if_count(arg, philo);
 	}

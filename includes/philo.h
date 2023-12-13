@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:53:26 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 16:28:55 by man              ###   ########.fr       */
+/*   Updated: 2023/12/13 18:35:34 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ void		*thread_work(void *a);
 void		philo_eat(t_philo *philo);
 void		end_check(t_arg *arg);
 void		dead_check(t_arg *arg, t_philo *philo);
+int			mutex_check(int flag, pthread_mutex_t *mu);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:40 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 16:30:01 by man              ###   ########.fr       */
+/*   Updated: 2023/12/13 18:35:05 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,14 @@ void	*thread_work(void *a)
 		return (philo_one(philo->arg, philo));
 	if (philo->id % 2 == 0)
 		usleep(100);
-	while (!(philo->arg->isdead))
+	while (1)
 	{
 		pthread_mutex_lock(&(philo->arg->dead_check));
-		if (philo->arg->isdead)
-		{
-			pthread_mutex_unlock(&(philo->arg->dead_check));
+		if (mutex_check(philo->arg->isdead, &(philo->arg->dead_check)))
 			break ;
-		}
 		util(philo);
-		if (philo->arg->eatend)
-		{
-			pthread_mutex_unlock(&(philo->arg->num_check));
+		if (mutex_check(philo->arg->eatend, &(philo->arg->num_check)))
 			break ;
-		}
 		pthread_mutex_unlock(&(philo->arg->num_check));
 		sleep_think(philo->arg, philo);
 	}
