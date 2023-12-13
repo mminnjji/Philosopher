@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:49 by man               #+#    #+#             */
-/*   Updated: 2023/12/13 18:35:42 by man              ###   ########.fr       */
+/*   Updated: 2023/12/13 20:17:17 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	if_dead(t_arg *arg, t_philo *philo, int i)
 {
 	pthread_mutex_unlock(&(arg->dead_check));
 	pthread_mutex_lock(&(arg->eat_check));
-	if (get_time() - philo[i].last_eat > arg->death_time)
+	if (get_time() - philo[i].last_eat >= arg->death_time)
 	{
 		philo_print(arg, i + 1, "died");
 		pthread_mutex_lock(&(arg->dead_check));
@@ -46,7 +46,6 @@ void	if_dead(t_arg *arg, t_philo *philo, int i)
 		pthread_mutex_unlock(&(arg->dead_check));
 	}
 	pthread_mutex_unlock(&(arg->eat_check));
-	usleep(100);
 }
 
 void	if_count(t_arg *arg, t_philo *philo)
