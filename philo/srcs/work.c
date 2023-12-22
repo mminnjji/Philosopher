@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2023/12/13 20:14:37 by man              ###   ########.fr       */
+/*   Updated: 2023/12/21 15:46:27 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	philo_eat(t_philo *philo)
 		pthread_mutex_unlock(&(arg->count_check));
 		philo_fork_no(philo, &arg);
 	}
+	else 
+		pthread_mutex_unlock(&(arg->count_check));
 }
 
 int	philo_work(t_arg *arg)
