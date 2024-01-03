@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:49 by man               #+#    #+#             */
-/*   Updated: 2023/12/13 20:17:17 by man              ###   ########.fr       */
+/*   Updated: 2024/01/03 15:19:48 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ void	if_count(t_arg *arg, t_philo *philo)
 		i++;
 	pthread_mutex_unlock(&(arg->count_check));
 	pthread_mutex_lock(&(arg->num_check));
+	pthread_mutex_lock(&(arg->eat_check));
 	if (i == arg->philo_n)
 		arg->eatend = 1;
+	pthread_mutex_unlock(&(arg->eat_check));
 	pthread_mutex_unlock(&(arg->num_check));
 }
 

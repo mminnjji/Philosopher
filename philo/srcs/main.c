@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:56 by man               #+#    #+#             */
-/*   Updated: 2023/11/14 16:29:41 by man              ###   ########.fr       */
+/*   Updated: 2024/01/03 16:44:05 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int	main(int argc, char **argv)
 		return (print_error(4));
 	pthread_mutex_destroy(&(arg->dead_check));
 	pthread_mutex_destroy(&(arg->eat_check));
+	pthread_mutex_destroy(&(arg->num_check));
+	pthread_mutex_destroy(&(arg->count_check));
 	free(arg->philo);
 	free(arg);
 	return (0);
