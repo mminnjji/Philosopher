@@ -6,12 +6,12 @@ SRCS 	= srcs/main.c srcs/util.c srcs/work.c srcs/ft_atoi.c srcs/check.c srcs/thr
 OBJS 	= $(SRCS:.c=.o)
 
 .c.o :	$(SRCS)
-	$(CC) -c $< -o $(<:.c=.o)
+	$(CC) -c $(CFLAGS) $< -o $(<:.c=.o)
 
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -g $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)

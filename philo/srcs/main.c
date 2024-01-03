@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:56 by man               #+#    #+#             */
-/*   Updated: 2024/01/03 16:44:05 by man              ###   ########.fr       */
+/*   Updated: 2024/01/03 17:29:27 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	arg_init(char **argv, int argc, t_arg *p)
 	p->isdead = 0;
 	p->eatend = 0;
 	if (argc == 6)
-		p->eat_num = ft_atoi(argv[5]) - 1;
+		p->eat_num = ft_atoi(argv[5]);
 	if (p->philo_n < 1 || p->death_time < 0 || p->eat_time < 0 || \
 			p->sleep_time < 0 || (argc == 6 && p->eat_num < 0))
 		return (1);

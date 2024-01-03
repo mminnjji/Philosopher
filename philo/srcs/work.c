@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2024/01/03 16:32:47 by man              ###   ########.fr       */
+/*   Updated: 2024/01/03 17:29:20 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	philo_eat(t_philo *philo)
 
 	arg = philo->arg;
 	pthread_mutex_lock(&(arg->count_check));
-	if (arg->eat_num == -1 || philo->eat_count <= arg->eat_num)
+	if (arg->eat_num == -1 || philo->eat_count < arg->eat_num)
 	{
 		pthread_mutex_unlock(&(arg->count_check));
 		philo_fork_pick(philo, &arg);
