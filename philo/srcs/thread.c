@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:40 by man               #+#    #+#             */
-/*   Updated: 2024/01/03 16:32:57 by man              ###   ########.fr       */
+/*   Updated: 2024/01/03 17:26:49 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	sleep_think(t_arg *arg, t_philo *philo)
 void	*philo_one(t_arg *arg, t_philo *philo)
 {
 	philo_print(arg, philo->id, "has taken a fork");
+	interval_usleep((long long)arg->death_time, arg);
 	philo_print(arg, philo->id, "died");
 	pthread_mutex_lock(&(arg->dead_check));
 	arg->isdead = 1;
