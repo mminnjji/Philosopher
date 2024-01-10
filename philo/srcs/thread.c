@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:40 by man               #+#    #+#             */
-/*   Updated: 2024/01/03 17:26:49 by man              ###   ########.fr       */
+/*   Updated: 2024/01/10 17:01:16 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,22 @@
 
 void	sleep_think(t_arg *arg, t_philo *philo)
 {
-	philo_print(arg, philo->id, "is sleeping");
-	interval_usleep((long long)arg->sleep_time, arg);
-	philo_print(arg, philo->id, "is thinking");
+	pthread_mutex_lock(&(arg->last_check));
+	if (!philo->last_check)
+	{
+		pthread_mutex_unlock(&(arg->last_check));
+		philo_print(arg, philo->id, "is sleeping");
+		interval_usleep((long long)arg->sleep_time, arg);
+		pthread_mutex_lock(&(arg->count_check));
+		if (!arg->eatend)
+			philo_print(arg, philo->id, "is thinking");
+		pthread_mutex_unlock(&(arg->count_check));
+	}
+	else
+	{
+		pthread_mutex_lock(&(arg->count_check));
+		pthread_mutex_unlock(&(arg->last_check));
+	}
 }
 
 void	*philo_one(t_arg *arg, t_philo *philo)
@@ -44,7 +57,7 @@ void	*thread_work(void *a)
 	philo = (t_philo *)a;
 	if (philo->arg->philo_n == 1)
 		return (philo_one(philo->arg, philo));
-	if (!(philo->arg->philo_n % 2) && !(philo->id % 2))
+	if (!(philo->arg->philo_n % 2))
 		usleep(100);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:53:26 by man               #+#    #+#             */
-/*   Updated: 2023/12/13 18:35:34 by man              ###   ########.fr       */
+/*   Updated: 2024/01/10 16:45:30 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_philo
 	int				right_fork;
 	int				eat_count;
 	long long		last_eat;
+	int				last_check;
 	struct s_arg	*arg;
 	pthread_t		th_id;
 }	t_philo;
@@ -35,9 +36,9 @@ typedef struct s_philo
 typedef struct s_arg
 {
 	int				philo_n;
-	int				death_time;
-	int				eat_time;
-	int				sleep_time;
+	long long		death_time;
+	long long		eat_time;
+	long long		sleep_time;
 	int				eat_num;
 	int				eatend;
 	int				isdead;
@@ -46,6 +47,7 @@ typedef struct s_arg
 	pthread_mutex_t	eat_check;
 	pthread_mutex_t	num_check;
 	pthread_mutex_t	count_check;
+	pthread_mutex_t	last_check;
 	pthread_mutex_t	work;
 	pthread_mutex_t	*fork;
 	struct s_philo	*philo;
