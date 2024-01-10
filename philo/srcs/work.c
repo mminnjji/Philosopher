@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2024/01/10 17:04:52 by man              ###   ########.fr       */
+/*   Updated: 2024/01/10 17:17:30 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	philo_fork_pick(t_philo *philo, t_arg **arg)
 {
-	if (philo->id % 2 != 0 && philo->id != (*arg)->philo_n - 1)
+	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_lock(&((*arg)->fork[philo->left_fork]));
 		philo_print(*arg, philo->id, "has taken a fork");
@@ -31,7 +31,7 @@ void	philo_fork_pick(t_philo *philo, t_arg **arg)
 
 void	philo_fork_no(t_philo *philo, t_arg **arg)
 {
-	if (philo->id % 2 != 0 && philo->id != (*arg)->philo_n - 1)
+	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_unlock(&((*arg)->fork[philo->left_fork]));
 		pthread_mutex_unlock(&((*arg)->fork[philo->right_fork]));
@@ -45,7 +45,6 @@ void	philo_fork_no(t_philo *philo, t_arg **arg)
 
 void	philo_eat_util(t_arg **arg, t_philo **philo)
 {
-	pthread_mutex_unlock(&((*arg)->num_check));
 	pthread_mutex_unlock(&((*arg)->count_check));
 	pthread_mutex_lock(&((*arg)->last_check));
 	(*philo)->last_check = 1;
@@ -58,10 +57,8 @@ void	philo_eat(t_philo *philo)
 
 	arg = philo->arg;
 	pthread_mutex_lock(&(arg->count_check));
-	pthread_mutex_lock(&(arg->num_check));
-	if (arg->eat_num == -1 || philo->eat_count < arg->eat_num || !arg->eatend)
+	if (arg->eat_num == -1 || philo->eat_count < arg->eat_num)
 	{
-		pthread_mutex_unlock(&(arg->num_check));
 		pthread_mutex_unlock(&(arg->count_check));
 		philo_fork_pick(philo, &arg);
 		pthread_mutex_lock(&(arg->eat_check));
