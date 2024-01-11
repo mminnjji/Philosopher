@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:40 by man               #+#    #+#             */
-/*   Updated: 2024/01/11 16:08:09 by man              ###   ########.fr       */
+/*   Updated: 2024/01/11 20:59:05 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ void	sleep_think(t_arg *arg, t_philo *philo)
 		pthread_mutex_unlock(&(arg->last_check));
 		philo_print(arg, philo->id, "is sleeping");
 		interval_usleep(arg->sleep_time, arg);
-		pthread_mutex_lock(&(arg->count_check));
-		if (!arg->eatend)
-			philo_print(arg, philo->id, "is thinking");
-		pthread_mutex_unlock(&(arg->count_check));
+		philo_print(arg, philo->id, "is thinking");
+		interval_usleep(arg->eat_time - arg->sleep_time, arg);
 	}
 	else
 		pthread_mutex_unlock(&(arg->last_check));
