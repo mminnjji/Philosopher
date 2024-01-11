@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2024/01/11 16:02:04 by man              ###   ########.fr       */
+/*   Updated: 2024/01/11 17:02:49 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	philo_fork_pick(t_philo *philo, t_arg **arg)
 {
-	if (philo->id % 2 != 0)
+	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(&((*arg)->fork[philo->left_fork]));
 		philo_print(*arg, philo->id, "has taken a fork");
@@ -31,7 +31,7 @@ void	philo_fork_pick(t_philo *philo, t_arg **arg)
 
 void	philo_fork_no(t_philo *philo, t_arg **arg)
 {
-	if (philo->id % 2 != 0)
+	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(&((*arg)->fork[philo->left_fork]));
 		pthread_mutex_unlock(&((*arg)->fork[philo->right_fork]));
