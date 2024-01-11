@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:38:01 by man               #+#    #+#             */
-/*   Updated: 2024/01/11 21:14:24 by man              ###   ########.fr       */
+/*   Updated: 2024/01/11 21:31:13 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	interval_usleep(long long sleep_t, t_arg *arg)
 	long long	n;
 
 	n = get_time();
+	if (sleep_t <= 0)
+		return ;
 	while (1)
 	{
 		pthread_mutex_lock(&(arg->dead_check));
