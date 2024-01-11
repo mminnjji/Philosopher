@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:59:40 by man               #+#    #+#             */
-/*   Updated: 2024/01/10 17:18:40 by man              ###   ########.fr       */
+/*   Updated: 2024/01/11 16:08:09 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sleep_think(t_arg *arg, t_philo *philo)
 	{
 		pthread_mutex_unlock(&(arg->last_check));
 		philo_print(arg, philo->id, "is sleeping");
-		interval_usleep((long long)arg->sleep_time, arg);
+		interval_usleep(arg->sleep_time, arg);
 		pthread_mutex_lock(&(arg->count_check));
 		if (!arg->eatend)
 			philo_print(arg, philo->id, "is thinking");
@@ -32,7 +32,7 @@ void	sleep_think(t_arg *arg, t_philo *philo)
 void	*philo_one(t_arg *arg, t_philo *philo)
 {
 	philo_print(arg, philo->id, "has taken a fork");
-	interval_usleep((long long)arg->death_time, arg);
+	interval_usleep(arg->death_time, arg);
 	philo_print(arg, philo->id, "died");
 	pthread_mutex_lock(&(arg->dead_check));
 	arg->isdead = 1;
@@ -66,8 +66,7 @@ void	*thread_work(void *a)
 			break ;
 		pthread_mutex_unlock(&(philo->arg->num_check));
 		sleep_think(philo->arg, philo);
-		if (philo->arg->philo_n % 2)
-			usleep(100);
+		usleep(100);
 	}
 	return (NULL);
 }

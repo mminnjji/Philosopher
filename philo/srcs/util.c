@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:38:01 by man               #+#    #+#             */
-/*   Updated: 2023/12/13 19:23:42 by man              ###   ########.fr       */
+/*   Updated: 2024/01/11 16:05:36 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	interval_usleep(long long sleep_t, t_arg *arg)
 		pthread_mutex_unlock(&(arg->dead_check));
 		if (get_time() - n >= sleep_t)
 			break ;
-		usleep(50);
+		usleep(100);
 	}
 }
 
