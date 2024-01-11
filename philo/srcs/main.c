@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:56 by man               #+#    #+#             */
-/*   Updated: 2024/01/10 16:48:44 by man              ###   ########.fr       */
+/*   Updated: 2024/01/11 21:16:29 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	philo_init(t_arg **arg)
 		(*arg)->philo[i].left_fork = i;
 		(*arg)->philo[i].right_fork = (i + 1) % (*arg)->philo_n;
 		(*arg)->philo[i].last_eat = 0;
-		(*arg)->philo[i].last_check = 0;
 		(*arg)->philo[i].arg = (*arg);
 		i++;
 	}
@@ -48,8 +47,7 @@ int	mutex_init(t_arg *p)
 			pthread_mutex_init(&(p->work), NULL) == -1 || \
 			pthread_mutex_init(&(p->dead_check), NULL) == -1 || \
 			pthread_mutex_init(&(p->num_check), NULL) == -1 || \
-			pthread_mutex_init(&(p->count_check), NULL) == -1 || \
-			pthread_mutex_init(&(p->last_check), NULL) == -1)
+			pthread_mutex_init(&(p->count_check), NULL) == -1)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:37:59 by man               #+#    #+#             */
-/*   Updated: 2024/01/11 17:02:49 by man              ###   ########.fr       */
+/*   Updated: 2024/01/11 21:17:11 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,6 @@ void	philo_fork_no(t_philo *philo, t_arg **arg)
 	}
 }
 
-void	philo_eat_util(t_arg **arg, t_philo **philo)
-{
-	pthread_mutex_unlock(&((*arg)->count_check));
-	pthread_mutex_lock(&((*arg)->last_check));
-	(*philo)->last_check = 1;
-	pthread_mutex_unlock(&((*arg)->last_check));
-}
-
 void	philo_eat(t_philo *philo)
 {
 	t_arg	*arg;
@@ -72,7 +64,7 @@ void	philo_eat(t_philo *philo)
 		philo_fork_no(philo, &arg);
 	}
 	else
-		philo_eat_util(&arg, &philo);
+		pthread_mutex_unlock(&(arg->count_check));
 }
 
 int	philo_work(t_arg *arg)

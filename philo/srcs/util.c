@@ -6,7 +6,7 @@
 /*   By: man <man@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 09:38:01 by man               #+#    #+#             */
-/*   Updated: 2024/01/11 16:05:36 by man              ###   ########.fr       */
+/*   Updated: 2024/01/11 21:14:24 by man              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,14 @@ void	philo_print(t_arg *arg, int id, char *str)
 {
 	pthread_mutex_lock(&(arg->work));
 	pthread_mutex_lock(&(arg->dead_check));
-	if (!(arg->isdead))
+	pthread_mutex_lock(&(arg->num_check));
+	if (!(arg->isdead) && !(arg->eatend))
 	{
 		printf("%lli ", get_time() - arg->start_time);
 		printf("%i ", id);
 		printf("%s\n", str);
 	}
+	pthread_mutex_unlock(&(arg->num_check));
 	pthread_mutex_unlock(&(arg->dead_check));
 	pthread_mutex_unlock(&(arg->work));
 }
